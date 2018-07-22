@@ -82,9 +82,6 @@ class SubimageChecker(object):
         self.image1 = cv2.imread(file1_path, cv2.CV_LOAD_IMAGE_GRAYSCALE)
         self.image2 = cv2.imread(file2_path, cv2.CV_LOAD_IMAGE_GRAYSCALE)
 
-        self.image1_canny = cv2.Canny(self.image1, 32, 128, apertureSize=3)
-        self.image2_canny = cv2.Canny(self.image2, 32, 128, apertureSize=3)
-
     def validate_images(self):
         """
         Various checks on the images
@@ -138,9 +135,12 @@ class SubimageChecker(object):
         if not self.validate_images():
             return None
 
+        image1_canny = cv2.Canny(self.image1, 32, 128, apertureSize=3)
+        image2_canny = cv2.Canny(self.image2, 32, 128, apertureSize=3)
+
         result = cv2.matchTemplate(
-            self.image1_canny,
-            self.image2_canny,
+            image1_canny,
+            image2_canny,
             cv2.TM_CCOEFF_NORMED,
         )
         (y, x) = np.unravel_index(result.argmax(), result.shape)
