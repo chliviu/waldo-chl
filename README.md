@@ -18,3 +18,12 @@ Script that checks if an image is a subimage of another one.
     ```
     export PYTHONPATH=$PYTHONPATH:/usr/lib/python2.7/dist-packages:/usr/local/lib/python2.7/dist-packages
     ````
+
+    This would make the virtualenv aware
+     of the OpenCV Python library installed in `dist`.
+
+* Install Python requirements
+
+  ```
+  $ pip install requirements.txt
+  ```
