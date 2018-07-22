@@ -85,10 +85,59 @@ class SubimageChecker(object):
         self.image1_canny = cv2.Canny(self.image1, 32, 128, apertureSize=3)
         self.image2_canny = cv2.Canny(self.image2, 32, 128, apertureSize=3)
 
+    def validate_images(self):
+        """
+        Various checks on the images
+        """
+        if not self._validate_are_images():
+            return False
+
+        if not self._validate_image_dimensions():
+            return False
+
+        return True
+
+    def _validate_are_images(self):
+        if self.image1 is None:
+            logger.warning(
+                'Path to first file is not pointing '
+                'to an image.'
+            )
+            return False
+
+        if self.image2 is None:
+            logger.warning(
+                'Path to second file is not pointing '
+                'to an image.'
+            )
+            return False
+
+        return True
+
+    def _validate_image_dimensions(self):
+        """
+        Checking that an image can be subimage of another one,
+        based on dimensions
+        eg. (100x200) and (50x300) can't be subimages
+        """
+        # getting the first two,
+        # in case image is a binary and is missing `channels`
+        height1, width1 = self.image1.shape[:2]
+        height2, width2 = self.image2.shape[:2]
+        sizes_diff = [height1 - height2, width1 - width2]
+        if sum([1 for item in sizes_diff if item > 0]) == 1:
+            logger.warning('Images are incompatible sizes')
+            return False
+
+        return True
+
     def check(self):
         """
         perform the actual subimage check
         """
+        if not self.validate_images():
+            return None
+
         result = cv2.matchTemplate(
             self.image1_canny,
             self.image2_canny,
