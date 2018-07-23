@@ -25,5 +25,14 @@ Script that checks if an image is a subimage of another one.
 * Install Python requirements
 
   ```
-  $ pip install requirements.txt
+  $ pip install -r requirements.txt
+  ```
+
+
+## Feature development
+
+* Install dev requirements
+
+  ```
+  $ pip install -r requirements-dev.txt
   ```
