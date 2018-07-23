@@ -36,3 +36,10 @@ Script that checks if an image is a subimage of another one.
   ```
   $ pip install -r requirements-dev.txt
   ```
+
+* Running tests
+
+  ```
+  $ cd tests
+  $ pytest -q test_subimage.py
+  ```
